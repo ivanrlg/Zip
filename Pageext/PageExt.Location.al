@@ -1,8 +1,23 @@
-pageextension 53100 SalesOrderListExt extends "Sales Order List"
+pageextension 53102 "Location Ext" extends "Location Card"
 {
+    layout
+    {
+        addfirst(factboxes)
+        {
+            part("Attached Documents"; "Document Attachment Factbox")
+            {
+                ApplicationArea = All;
+                Caption = 'Attachments';
+                SubPageLink = "Table ID" = CONST(14),
+                              "No." = FIELD(Code);
+                Visible = true;
+            }
+        }
+    }
+
     actions
     {
-        addafter("&Order Confirmation")
+        addafter("Warehouse Employees")
         {
             action(Import)
             {
@@ -10,7 +25,6 @@ pageextension 53100 SalesOrderListExt extends "Sales Order List"
                 ApplicationArea = All;
                 Promoted = true;
                 PromotedCategory = Process;
-                PromotedIsBig = true;
                 Image = Import;
                 ToolTip = 'Import Attachments from Zip';
 

@@ -7,11 +7,10 @@ codeunit 53100 Import
     var
         FileManagement: Codeunit "File Management";
 
-    procedure ImportAttachmentsFromZip(var SalesHeader: Record "Sales Header")
+    procedure ImportAttachmentsFromZip(FromRecRef: RecordRef)
     var
         DataCompression: Codeunit "Data Compression";
         TempBlob: Codeunit "Temp Blob";
-        FromRecRef: RecordRef;
         Window: Dialog;
         DocStream: InStream;
         InStream: InStream;
@@ -59,10 +58,6 @@ codeunit 53100 Import
                 TempBlob.CreateOutStream(EntryOutStream);
                 DataCompression.ExtractEntry(EntryListKey, EntryOutStream, Length);
                 TempBlob.CreateInStream(DocStream);
-
-                //In this line we load the "RecordRef", here it would make it easier for us in case we want to use another list, such as Purch Order, 
-                //simply change the input parameter of this method with the relevant table.
-                FromRecRef.GETTABLE(SalesHeader);
 
                 //We verify that the file that is iterating is not empty
                 if TempBlob.HasValue then
